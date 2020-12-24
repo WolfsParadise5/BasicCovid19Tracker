@@ -17,5 +17,7 @@ public class Person {
         this.status = status;
     }
 
+    public void PersonToJSON() {
 
+    }
 }

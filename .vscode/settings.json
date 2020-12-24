@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "C:/joinery-dataframe-1.9-jar"
+    ]
+}
