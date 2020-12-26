@@ -22,7 +22,7 @@ public class Person {
         this.phone = phone;
         this.status = status;
     }
-
+    //Testing JSON Parsing
     public void PersonToJSON() {
         JSONObject people = new JSONObject();
         

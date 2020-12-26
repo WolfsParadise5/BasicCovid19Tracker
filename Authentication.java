@@ -22,6 +22,7 @@ public class Authentication {
 		System.out.println("=========================");
 
 		System.out.println();
+		regObj.close();
 	}
 
 	if (selection == 2){
@@ -31,6 +32,7 @@ public class Authentication {
 		System.out.println("=========================");
 
 		System.out.println();
+		loginObj.close();
 	}
   }
 }
