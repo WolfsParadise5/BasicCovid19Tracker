@@ -1,15 +1,17 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Vector;
+
 import org.json.*;
 
 public class Person {
     
-    String name;
-    int phone;
-    String[] statuslist = {"Normal", "Case", "Close"};
-    String status;
-    Vector<String> v = new Vector<>();
+    private String name;
+    private int phone;
+    private String[] statuslist = {"Normal", "Case", "Close"};
+    private String status;
+    //Vector<String> v = new Vector<>();
+
+    Person() {}
 
     Person(String name,int phone) {
         this.name = name;
@@ -40,4 +42,27 @@ public class Person {
             e.printStackTrace();
         }
     }
+
+
+    //Customer shenenigans to move to a new class
+    private void checkIn(String date, String time, String location) {
+        
+        System.out.println("Under construction");
+        //Add to JSON
+    }
+
+    public void checkStatus() {
+        
+    }
+
+    public void checkLocation() {
+
+    }
+
+
+
+
+
+
+    
 }

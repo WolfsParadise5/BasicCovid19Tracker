@@ -1,0 +1,66 @@
+[
+    {"People":
+        [
+            {
+                "name":"Jason Banana",
+                "age" : 20,
+                "phone" : 112696969,
+                "status" : "normal",
+                "username":"roastedococnut38",
+                "password":"tacobruh69",
+                "location":[],
+                "timeCheckedIn":[]
+            },
+            {
+                "name":"Siti Ricardo",
+                "age" : 25,
+                "phone" : 112353469,
+                "gender" : "fridge",
+                "username":"roastedococnut38",
+                "password":"tacobruh69",
+                "location":[],
+                "timeCheckedIn":[]
+
+            }
+        ]
+    },
+
+    {"Shops":
+        [
+            {
+                "name":"Bermana Eleven",
+                "phone":5478588,
+                "status": "normal",
+                "manager": "Dio"
+            },
+
+            {
+                "name":"7-Eleven",
+                "phone":7689588,
+                "status": "normal",
+                "manager": "Dio"
+            },
+
+            {
+                "name":"Tesco",
+                "phone":8903890,
+                "status": "normal",
+                "manager": "Dio"
+            },
+
+            {
+                "name":"Dior",
+                "phone":23243509,
+                "status": "normal",
+                "manager": "Dio"
+            },
+
+            {
+                "name":"Perodua",
+                "phone":34983209,
+                "status": "normal",
+                "manager": "Dio"
+            }
+        ]
+    }
+]
