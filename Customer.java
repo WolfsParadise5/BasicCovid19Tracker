@@ -2,10 +2,16 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.Date;
 
-public class Customer {
-	private 	
-}
-
+public class Customer extend Person {
+	private date;
+	
+	Customer () {}
+	
+	Customer(String name, int phoneNo, String status) {
+		super(name, phone, status);
+		this.date = date;
+	}
+	
     static void MainMenu()
     {
         do{
