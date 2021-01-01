@@ -1,5 +1,5 @@
 [
-    {"People":
+    {"Customer":
         [
             {
                 "name":"Jason Banana",
@@ -12,11 +12,35 @@
             {
                 "name":"Siti Ricardo",
                 "phone" : 112353469,
+                "status" : "normal",
                 "username":"roastedococnut38",
                 "location":[],
                 "timeCheckedIn":[]
 
-            }
+            },
+            {
+                "name":"Jonathan Joestar",
+                "phone" : 134807969,
+                "status" : "normal",
+                "username":"gentleman12",
+                "location":[],
+                "timeCheckedIn":[]
+            },
+            {
+               "name":"Dio Brando",
+               "phone" : 198647563,
+               "username":"vampirewry69",
+               "location":[],
+               "timeCheckedIn":[]
+            },
+            {
+                "name":"Giorno Giovanna",
+                "phone" : 178536425,
+                "status" : "normal",
+                "username":"goldexperience66",
+                "location":[],
+                "timeCheckedIn":[]
+            },
         ]
     },
 
