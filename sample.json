@@ -3,21 +3,16 @@
         [
             {
                 "name":"Jason Banana",
-                "age" : 20,
                 "phone" : 112696969,
                 "status" : "normal",
                 "username":"roastedococnut38",
-                "password":"tacobruh69",
                 "location":[],
                 "timeCheckedIn":[]
             },
             {
                 "name":"Siti Ricardo",
-                "age" : 25,
                 "phone" : 112353469,
-                "gender" : "fridge",
                 "username":"roastedococnut38",
-                "password":"tacobruh69",
                 "location":[],
                 "timeCheckedIn":[]
 
