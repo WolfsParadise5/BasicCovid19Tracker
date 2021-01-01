@@ -3,6 +3,9 @@ import java.time.LocalDateTime;
 import java.time.format.Date;
 
 public class Customer {
+	private 	
+}
+
     static void MainMenu()
     {
         do{
@@ -68,15 +71,15 @@ public class Customer {
 		System.out.println("|  Sign in or Register? |");
 		System.out.println("=========================");
 		System.out.println("1. Register");
-        System.out.println("2. Log In");
-        System.out.println("3. Exit");
+        	System.out.println("2. Log In");
+        	System.out.println("3. Exit");
 		System.out.print("->");
 		int selection = custObj.nextInt();
 
 		if(selection == 1)
 		{
 		    System.out.println("=========================");
-	        System.out.println("   Register an account   ");
+	            System.out.println("   Register an account   ");
 		    System.out.println("=========================");
 		    System.out.print("Enter your name: ");
 		    custObj.nextLine();
@@ -89,13 +92,13 @@ public class Customer {
 		else if(selection == 2)
 		{
 			System.out.println("=========================");
-	    	System.out.println("         Log in          ");
+	    		System.out.println("         Log in          ");
 			System.out.println("=========================");
-            System.out.print("Enter your name: ");
-            custObj.nextLine();
-            String logInName = custObj.nextLine();
-            System.out.println("Welcome back! " + logInName);
-            MainMenu();
+                        System.out.print("Enter your name: ");
+            		custObj.nextLine();
+            		String logInName = custObj.nextLine();
+            		System.out.println("Welcome back! " + logInName);
+            		MainMenu();
         }
         
         else if(selection == 3)
