@@ -1,15 +1,17 @@
 import java.util.*;
 import java.time.LocalDateTime;
-import java.time.format.Date;
+import java.time.format.DateTimeFormatter; 
 
-public class Customer extend Person {
-	private date;
+public class Customer extends Person {
+	private String date;
+	private String time;
 	
 	Customer () {}
 	
-	Customer(String name, int phoneNo, String status) {
+	Customer(String name, int phone, String status, String date, String time) {
 		super(name, phone, status);
 		this.date = date;
+		this.date = time;
 	}
 	
     static void MainMenu()
@@ -36,13 +38,17 @@ public class Customer extend Person {
 
         else if (mainSelect == 2)
         {
+	    LocalDateTime date = LocalDateTime.now();
+            LocalDateTime time = LocalDateTime.now();
+	    DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
             System.out.println("=========================");
             System.out.println("|        Check In       |");
             System.out.println("=========================");
             System.out.print("Please enter your location to check in: ");
             mainObj.nextLine();
             String location = mainObj.nextLine();
-            System.out.println("You have successfully check into " + location + ".");
+            System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
         }
 
         else if(mainSelect == 3)
@@ -92,7 +98,7 @@ public class Customer extend Person {
 		    String userName = custObj.nextLine();
 		    System.out.print("Enter your phone number: ");
 		    int phoneNo = custObj.nextInt();
-		    System.out.println("Thank you for your registration " + userName + "." + "Your phone number is " + phoneNo);
+		    System.out.println("Thank you for your registration " + name"." + "Your phone number is " + phone);
         }
 		
 		else if(selection == 2)
