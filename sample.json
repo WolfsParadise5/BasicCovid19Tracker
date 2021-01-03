@@ -6,16 +6,16 @@
                 "phone" : 112696969,
                 "status" : "normal",
                 "username":"roastedococnut38",
-                "location":[],
-                "timeCheckedIn":[]
+                "location":["Tesco","Perodua"],
+                "timeCheckedIn":[1609680719,1609632111]
             },
             {
                 "name":"Siti Ricardo",
                 "phone" : 112353469,
                 "status" : "normal",
                 "username":"roastedococnut38",
-                "location":[],
-                "timeCheckedIn":[]
+                "location":["Tesco","Dior","Perodua"],
+                "timeCheckedIn":[1609673519,1609678919,1608318919]
 
             },
             {
@@ -23,24 +23,24 @@
                 "phone" : 134807969,
                 "status" : "normal",
                 "username":"gentleman12",
-                "location":[],
-                "timeCheckedIn":[]
+                "location":["Tesco","Perodua"],
+                "timeCheckedIn":[1609678919,1608678919]
             },
             {
                "name":"Dio Brando",
                "phone" : 198647563,
                "username":"vampirewry69",
-               "location":[],
-               "timeCheckedIn":[]
+               "location":["7-Eleven","Dior","Perodua"],
+               "timeCheckedIn":[1609670419,1606666666,1609677919]
             },
             {
                 "name":"Giorno Giovanna",
                 "phone" : 178536425,
                 "status" : "normal",
                 "username":"goldexperience66",
-                "location":[],
-                "timeCheckedIn":[]
-            },
+                "location":["7-Eleven","Bermana Eleven"],
+                "timeCheckedIn":[1609670419,1599670419]
+            }
         ]
     },
 
