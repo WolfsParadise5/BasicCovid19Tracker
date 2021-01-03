@@ -1,3 +1,7 @@
+import org.json.simple.*;
+import org.json.simple.parser.*;
+import java.io.FileReader;
+
 public class Admin extends Person {
     
     Admin() {}
@@ -31,10 +35,39 @@ public class Admin extends Person {
     }
     
     
-    public void changeToCase() {
-        //Flags the customer
+    public void changeToCase(String name) {
+        //Find location went by customer
+        JSONParser parseFile = new JSONParser();
+        Object file = parseFile.parse(new FileReader("sample.json"));
+        JSONArray jsondata = (JSONArray)file;
+
+        //Getting customer data
+        JSONObject customer = (JSONObject)jsondata.get(0);
+        JSONArray datalist = (JSONArray)customer.get("Customer");
+        String foundName = new String();
+
+        int i = 0;
+        while(name != foundName) {
+            try {
+                JSONObject peopleData = (JSONObject)datalist.get(i);
+                foundName = (String)peopleData.get("name");
+            }
+
+            catch(Exception e) {
+                break;
+            }
+        }
+
+        String status = (String)peopleData.get("status");
+
+        //Change status
+        status = "case";
+
+        //Update json
         
-            //Find location went by customer
+
+        
+        i++;
 
             //Get the time
 
