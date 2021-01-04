@@ -1,3 +1,4 @@
+/*
 import java.io.FileReader;
 
 import org.json.simple.JSONObject;
@@ -26,7 +27,7 @@ public class TestJSON {
             int i = 0;
 
             try {
-                int length = datalist.length(); 
+                int length = datalist.length; 
                 System.out.print(length);
                 while(foundName != name) {
                     JSONObject peopleData = (JSONObject)datalist.get(i);
@@ -34,10 +35,9 @@ public class TestJSON {
 
                     System.out.println(name + "=" + foundName);
                     long phone = (long)peopleData.get("phone");
-                    /*
                     String[] location = (String[])peopleData.get("location");
                     String[] timeCheckedin = (String[])peopleData.get("timeCheckedIn");
-                    */
+                    
                     String status = (String)peopleData.get("status");
                     String username = (String)peopleData.get("username");
 
@@ -66,3 +66,5 @@ public class TestJSON {
         }
     }
 }
+
+*/

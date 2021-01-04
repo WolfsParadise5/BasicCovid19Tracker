@@ -1,6 +1,13 @@
-import org.json.simple.*;
-import org.json.simple.parser.*;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.List;
+//import java.util.LinkedList;
+//import java.io.BufferedReader;
 
 public class Admin extends Person {
     
@@ -15,7 +22,7 @@ public class Admin extends Person {
         System.out.println("-------------------------");
         System.out.format("No\t" + "Name\t" + "Phone\t" + "Status");
         System.out.println("");
-        System.out.println("-------------------------")
+        System.out.println("-------------------------");
     }
     
     public void DisplayShopDetails() {
@@ -37,41 +44,39 @@ public class Admin extends Person {
     
     public void changeToCase(String name) {
         //Find location went by customer
-        JSONParser parseFile = new JSONParser();
-        Object file = parseFile.parse(new FileReader("sample.json"));
-        JSONArray jsondata = (JSONArray)file;
+        File file = new File("saves/customer.csv");
+        
+        //Read existing file
+        try {
+            CSVReader reader = new CSVReader(new FileReader(file), ',');
+            List<String[]> csvbody = reader.readAll();
 
-        //Getting customer data
-        JSONObject customer = (JSONObject)jsondata.get(0);
-        JSONArray datalist = (JSONArray)customer.get("Customer");
-        String foundName = new String();
-
-        int i = 0;
-        while(name != foundName) {
-            try {
-                JSONObject peopleData = (JSONObject)datalist.get(i);
-                foundName = (String)peopleData.get("name");
+            for(int i=0; i < csvbody.size(); i++) {
+                String[] strArray = csvbody.get(i);
+                for(int j=0; j<strArray.length; j++) {
+                    if (strArray[j].equalsIgnoreCase(name)) {
+                        csvbody.get(i)[j+1] = "Case"; 
+                    }
+                }
             }
 
-            catch(Exception e) {
-                break;
-            }
+            reader.close();
+
+            FileWriter fi = new FileWriter(file);
+            CSVWriter writer = new CSVWriter(fi,',');
+
+            writer.writeAll(csvbody);
+            writer.flush();
+            writer.close();
         }
 
-        String status = (String)peopleData.get("status");
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        //Change status
-        status = "case";
-
-        //Update json
-        
-
-        
-        i++;
-
-            //Get the time
-
-
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         //Flags the other customer in one hour radius
 
 

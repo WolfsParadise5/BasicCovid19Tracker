@@ -48,7 +48,7 @@ public class Person {
     private void checkIn(String date, String time, String location) {
         
         System.out.println("Under construction");
-        //Add to JSON
+        //Add to CSV
     }
 
     public void checkStatus() {

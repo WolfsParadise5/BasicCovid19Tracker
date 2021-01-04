@@ -98,7 +98,7 @@ public class Customer extends Person {
 		    String userName = custObj.nextLine();
 		    System.out.print("Enter your phone number: ");
 		    int phoneNo = custObj.nextInt();
-		    System.out.println("Thank you for your registration " + name"." + "Your phone number is " + phone);
+		    System.out.println("Thank you for your registration " + userName + "." + "Your phone number is " + phoneNo);
         }
 		
 		else if(selection == 2)

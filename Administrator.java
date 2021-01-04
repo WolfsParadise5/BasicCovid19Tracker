@@ -14,6 +14,7 @@ public class Administrator {
             System.out.println("|5. Exit                 |");
             System.out.print("->");
             int mainSelect = mainObj.nextInt();
+            mainObj.close();
 
             if(mainSelect == 1)
             {
@@ -52,8 +53,8 @@ public class Administrator {
                 System.out.println("Logging off. See you again Agent 47.");
                 break;
             }
-            }while (true);
         }
+        while (true);
     }
     public static void main(String[] args) {
         do{
@@ -63,6 +64,7 @@ public class Administrator {
             System.out.println("=========================");
             System.out.print("Please key in your administrator key to process: ");
             int adminKey = adminObj.nextInt();
+            adminObj.close();
 
             if(adminKey == 69420)
             {
@@ -76,6 +78,9 @@ public class Administrator {
                 System.out.println("Intruder detected! System will shut down immediately.");
                 break;
             }
-        }while (true);
+        }
+        while (true);
+
+        
     }
 }
