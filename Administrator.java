@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 public class Administrator {
     static void adminMenu()
     {
