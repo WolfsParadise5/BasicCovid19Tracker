@@ -1,30 +1,40 @@
-import java.io.FileWriter;
-import java.io.IOException;
-
-import org.json.*;
+//import org.json.*;
 
 public class Person {
     
     private String name;
-    private int phone;
+    private String phone;
     private String[] statuslist = {"Normal", "Case", "Close"};
     private String status;
     //Vector<String> v = new Vector<>();
 
     Person() {}
 
-    Person(String name,int phone) {
+    Person(String name,String phone) {
         this.name = name;
         this.phone = phone;
-        this.status = statuslist[2];
+        this.status = statuslist[0];
     }
     
-    Person(String name,int phone, String status) {
+    Person(String name,String phone, String status) {
         this.name = name;
         this.phone = phone;
         this.status = status;
     }
-    //Testing JSON Parsing
+
+    public String getName(){
+        return name;
+    }
+
+    public String getPhone(){
+        return phone;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+   /*
     public void PersonToJSON() {
         JSONObject people = new JSONObject();
         
@@ -42,7 +52,7 @@ public class Person {
             e.printStackTrace();
         }
     }
-
+*/
 
     //Customer shenenigans to move to a new class
     private void checkIn(String date, String time, String location) {

@@ -1,38 +1,30 @@
-import java.io.BufferedReader;
-import java.io.File;
-//import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class readCSV {
-    
-    public static void main(String[] args) {
-
-        //Generate them csv file
-        Functions.LoadPeople();
-
-        //Read
-        File file = new File("saves/customer.csv");
-        String line = "";
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-
-            while((line = br.readLine()) != null) {
-
-                String[] values = line.split(",");
-                System.out.println(values[0] + " " + values[1] + " " + values[2] + " " + values[3]);
-            }
-
-            br.close();
+    public static void saveToFile(ArrayList<Customer> obj, String filename, String header) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append(header + '\n');
+        for (int i = 0; i < obj.size(); i++) {
+            sb.append (obj.get(i).toString() + "\n");
+            System.out.println(sb);
         }
-
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        
+        Files.write(Paths.get(filename), sb.toString().getBytes());
     }
+
+    public static List<String> readFromFile(String filename) throws IOException {
+       return Files.readAllLines(Paths.get(filename));
+    }
+
+    public static int row(String filename){
+        List<String> data = null; 
+        try {data = readCSV.readFromFile("customer.csv");}
+        catch (IOException e){}
+        return data.size();
+    }
+
 }
+

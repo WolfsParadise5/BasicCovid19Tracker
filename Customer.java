@@ -38,9 +38,9 @@ public class Customer extends Person {
 
         else if (mainSelect == 2)
         {
-	    LocalDateTime date = LocalDateTime.now();
+			LocalDateTime date = LocalDateTime.now();
             LocalDateTime time = LocalDateTime.now();
-	    DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
             System.out.println("=========================");
             System.out.println("|        Check In       |");
