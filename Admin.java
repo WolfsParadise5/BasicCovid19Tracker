@@ -79,37 +79,69 @@ public class Admin extends Person {
             e.printStackTrace();
         }
         
-        //Gets the time to flag others
+        //Gets the time and shop by customer to flag others
         try {
-            CSVReader getTime = new CSVReader(new FileReader("records.csv"), ',');
+            CSVReader getTime = new CSVReader(new FileReader("saves/records.csv"), ',');
             List<String[]> recordBody = getTime.readAll();
             Vector<Long> timeInfected = new Vector<Long>();
+            Vector<String> shopByCust = new Vector<String>();
             long tempLong;
+            String tempCustShop;
 
             for (int i=0; i < recordBody.size(); i++) {
                 String[] lineArray = recordBody.get(i);
                 for(int j=0; j < lineArray.length; j++) {
                     if(lineArray[j].equalsIgnoreCase(name)) {
                         tempLong = Long.parseLong(recordBody.get(i)[j+1]);
+                        tempCustShop = recordBody.get(i)[j+2];
                         timeInfected.add(tempLong);
+                        shopByCust.add(tempCustShop);
+
+                        System.out.println("Time :" + tempLong);
+                        System.out.println("Shop : " + shopByCust);
                     }
                 }
             }
             //cross check all the times in vector with the records.csv
             Vector<String> peopleInfected = new Vector<String>();
-            Vector<String> shopInfected = new Vector<String>();
 
             for(int i=0; i < timeInfected.size(); i++) {  //infected times
 
                 //Get all the infected people and shops
                 for(int j=0; j < recordBody.size(); j++) 
                 {
-                    String[] timeFind = recordBody.get(i);
+                    String[] timeFind = recordBody.get(j);
+
                     for(int k=0; k < timeFind.length; k++) {
-                        if (timeFind[k].equalsIgnoreCase(Long.toString(timeInfected.get(i)))) { //Incomplete if condition as not accounting range
-                            peopleInfected.addElement(recordBody.get(j)[k-2]);
-                            shopInfected.addElement(recordBody.get(j)[k+1]);
+                        tempLong = Long.parseLong(timeFind[2]);
+                        
+                        for(int l=0; l < shopByCust.size(); l++) {
+
+                            if (tempLong > timeInfected.get(i) & (tempLong - 3600) < timeInfected.get(i)) {
+                                
+                                String tempOneString = shopByCust.get(l);
+                                String tempTwoString = recordBody.get(j)[3];
+                                System.out.println(tempOneString + tempTwoString);
+
+                                if (tempOneString.equals(tempTwoString)) { //prob
+                                    peopleInfected.addElement(recordBody.get(j)[1]);
+                                    System.out.println("PeopleDwn: " + recordBody.get(j)[1]);
+                                }
+                            }
+
+                            if (tempLong < timeInfected.get(i) & (tempLong + 3600) > timeInfected.get(i)) {
+
+                                String tempOneString = shopByCust.get(l);
+                                String tempTwoString = recordBody.get(j)[3];
+                                System.out.println(tempOneString + tempTwoString);
+
+                                if (tempOneString.equals(tempTwoString)) { //prob
+                                    peopleInfected.addElement(recordBody.get(j)[1]);
+                                    System.out.println("PeopleUp: " + recordBody.get(j)[1] );
+                                }
+                            }
                         }
+
                     }
                 }
             }
@@ -144,14 +176,14 @@ public class Admin extends Person {
             CSVReader Shopreader = new CSVReader(new FileReader("saves/shop.csv"), ',');
             List<String[]> shopCsvBody = Shopreader.readAll();
             
-            for(int i=0; i < shopInfected.size(); i++) {
+            for(int i=0; i < shopByCust.size(); i++) {
                 
                 for(int j=0; j < shopCsvBody.size(); j++) {
                     String[] strArray = shopCsvBody.get(j);
                     
                     for(int k=0; k<strArray.length; k++) {
                         
-                        if (strArray[k].equalsIgnoreCase(shopInfected.get(i))) {
+                        if (strArray[k].equalsIgnoreCase(shopByCust.get(i))) {
                             shopCsvBody.get(j)[k+3] = "Case"; 
                         }
                     }
@@ -179,12 +211,6 @@ public class Admin extends Person {
             e.printStackTrace();
         }
 
-        
-
-        //Flag the customers that walked in during said period
-
-
-        //Flags the shops that kept their doors open
         
 
     }
