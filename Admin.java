@@ -18,28 +18,65 @@ public class Admin extends Person {
     
     }
 
-    public void DisplayCustomerDetails() {
-        System.out.print("CUSTOMER LIST");
-        System.out.println("-------------------------");
-        System.out.format("No\t" + "Name\t" + "Phone\t" + "Status");
+    public void DisplayCustomerDetails(){
+        System.out.println("CUSTOMER LIST");
+        System.out.println("----------------------------------------");
+        System.out.format("No\t" + "Name\t" + "Phone\t" + "\tStatus");
         System.out.println("");
-        System.out.println("-------------------------");
+        System.out.println("----------------------------------------");
+        
+        try {
+            List<String[]> nameData = Functions.openCSVFile("saves/customer.csv");
+
+            for(int i = 0; i < nameData.size(); i++) 
+                //System.out.println(nameData.get(i)[0] + "\t" + nameData.get(i)[2] + "     " + nameData.get(i)[1] + "\t" + nameData.get(i)[3]);
+                System.out.printf("%2d%11s%10d%7s%n",nameData.get(i)[0],nameData.get(i)[2],nameData.get(i)[1],nameData.get(i)[3]);
+        }
+    
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public void DisplayShopDetails() {
-        System.out.print("SHOP LIST");
+        System.out.println("SHOP LIST");
         System.out.println("-------------------------");
-        System.out.format("No\t" + "Name\t" + "Phone\t" + "Manager\t" + "Status");
+        System.out.format("No\t" + "Name       " + "Phone\t" + "Manager\t" + "Status");
         System.out.println("");
         System.out.println("-------------------------");
+
+        try {
+            List<String[]> nameData = Functions.openCSVFile("saves/shop.csv");
+
+            for(int i = 0; i < nameData.size(); i++) 
+                System.out.format(nameData.get(i)[0] + "\t" + nameData.get(i)[1] + "\t" + nameData.get(i)[2] + "\t" + nameData.get(i)[3] + "\t" + nameData.get(i)[4] + "\n");
+        }
+    
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void MasterVisitHistory() {
-        System.out.print("MASTER VISIT HISTORY");
-        System.out.println("-------------------------");
-        System.out.format("No\t" + "Date\t" + "Time\t" + "Customer\t" + "Shop");
+        System.out.println("MASTER VISIT HISTORY");
+        System.out.println("-------------------------------------------------------");
+        System.out.format("No\t" + "Date            " + "Time        " + " Customer\t" + "Shop");
         System.out.println("");
-        System.out.println("-------------------------");
+        System.out.println("-------------------------------------------------------");
+
+        try {
+            List<String[]> nameData = Functions.openCSVFile("saves/records.csv");
+
+            //Convert timestamp to date and time
+            
+            for(int i = 0; i < nameData.size(); i++)
+                System.out.println(nameData.get(i)[0] + "\t" + Functions.getDate(nameData.get(i)[2]) + "\t" + Functions.getTime(nameData.get(i)[2]) + "     " + nameData.get(i)[1] + "\t" + nameData.get(i)[3]);
+                
+        }
+    
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     
@@ -125,7 +162,6 @@ public class Admin extends Person {
 
                                 if (tempOneString.equals(tempTwoString)) { //prob
                                     peopleInfected.addElement(recordBody.get(j)[1]);
-                                    System.out.println("PeopleDwn: " + recordBody.get(j)[1]);
                                 }
                             }
 
@@ -133,11 +169,9 @@ public class Admin extends Person {
 
                                 String tempOneString = shopByCust.get(l);
                                 String tempTwoString = recordBody.get(j)[3];
-                                System.out.println(tempOneString + tempTwoString);
 
                                 if (tempOneString.equals(tempTwoString)) { //prob
                                     peopleInfected.addElement(recordBody.get(j)[1]);
-                                    System.out.println("PeopleUp: " + recordBody.get(j)[1] );
                                 }
                             }
                         }
@@ -157,7 +191,7 @@ public class Admin extends Person {
                     for(int k=0; k<custStrArray.length; k++) {
                         
                         if (custStrArray[k].equalsIgnoreCase(peopleInfected.get(i))) {
-                            custCsvBody.get(j)[k+1] = "Case"; 
+                            custCsvBody.get(j)[k+1] = "Close"; 
                         }
                     }
                 }

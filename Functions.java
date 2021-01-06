@@ -1,10 +1,18 @@
 import com.opencsv.CSVWriter;
+import com.opencsv.CSVReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.LocalTime;
 
 public class Functions {
     
@@ -86,5 +94,47 @@ public class Functions {
 
         System.out.println("Random people ready to go!");
 
+    }
+
+    public boolean isNameExists(String name) throws IOException, FileNotFoundException {
+
+        //Open the CSV
+        List<String[]> customerData = openCSVFile("saves/customer.csv");
+
+        //Iterate through customer list to find the name
+        for (int i= 0; i < customerData.size(); i++) {
+            if(customerData(i)[1].equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static List<String[]> openCSVFile(String filePath) throws IOException{
+
+        CSVReader getData = new CSVReader(new FileReader(filePath),',');
+        List<String[]> contents = getData.readAll();
+        return contents;
+
+    }
+
+    /*
+    public static LocalDateTime getDateTime(long seconds) { 
+        return LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
+    }
+    */
+
+    public static LocalDate getDate(String seconds) {
+        long day = Long.parseLong(seconds) / 86400;
+        return LocalDate.ofEpochDay(day);
+    }
+
+    public static LocalTime getTime(String seconds) {
+        long second = Long.parseLong(seconds);
+        while(second >= 86400) {
+            second -= 86400;
+        }
+
+        return LocalTime.ofSecondOfDay(second);
     }
 }
