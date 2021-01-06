@@ -1,19 +1,49 @@
 import java.util.*;
+
+//import jdk.vm.ci.code.Register;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter; 
 
 public class Customer extends Person {
-	private String date;
-	private String time;
+    private int no;
 	
 	Customer () {}
 	
-	Customer(String name, int phone, String status, String date, String time) {
+	Customer(int no, String phone, String name, String status) {
 		super(name, phone, status);
-		this.date = date;
-		this.date = time;
-	}
-	
+        this.no = no;
+    }
+    public ArrayList<Customer> customerData(){
+        ArrayList<Customer> custData = new ArrayList<>();
+        List<String> data = null; 
+        try {data = readCSV.readFromFile("customer.csv");}
+        catch (IOException e){}
+        for (int i = 1; i < data.size(); i++){
+            String[] items = data.get(i).split(",");
+            Customer tempCustomer = new Customer(Integer.parseInt(items[0]), items[1], items[2], items[3]);
+            custData.add(tempCustomer);
+        }
+        return custData;
+    }
+
+    public String toString(){
+        return no + "," + getPhone() + ","+ getName() + "," + getStatus();
+    }
+
+    public void Register(String phone, String name){
+        int no = readCSV.row("customer.csv");
+        System.out.println("ID:" + no);
+        ArrayList<Customer> allCustomer = customerData();
+        Customer registerCustomer = new Customer(no, phone, name, "Normal");
+        allCustomer.add(registerCustomer);
+        try{readCSV.saveToFile(allCustomer, "customer.csv", "No,Phone,Username,Status");}
+        catch (IOException e){}
+    }
+}
+
+class CustomerApp{
     static void MainMenu()
     {
         do{
@@ -73,6 +103,7 @@ public class Customer extends Person {
         {
             System.out.println("Invalid Input. Please try again.");
         }
+        mainObj.close();
     } while (true);
     }
 
@@ -83,34 +114,36 @@ public class Customer extends Person {
 		System.out.println("|  Sign in or Register? |");
 		System.out.println("=========================");
 		System.out.println("1. Register");
-        	System.out.println("2. Log In");
-        	System.out.println("3. Exit");
+        System.out.println("2. Log In");
+        System.out.println("3. Exit");
 		System.out.print("->");
 		int selection = custObj.nextInt();
 
 		if(selection == 1)
 		{
 		    System.out.println("=========================");
-	            System.out.println("   Register an account   ");
+	        System.out.println("   Register an account   ");
 		    System.out.println("=========================");
 		    System.out.print("Enter your name: ");
 		    custObj.nextLine();
 		    String userName = custObj.nextLine();
 		    System.out.print("Enter your phone number: ");
-		    int phoneNo = custObj.nextInt();
+            String phoneNo = custObj.nextLine();
+            Customer c = new Customer();
+            c.Register(phoneNo, userName);
 		    System.out.println("Thank you for your registration " + userName + "." + "Your phone number is " + phoneNo);
         }
 		
 		else if(selection == 2)
 		{
 			System.out.println("=========================");
-	    		System.out.println("         Log in          ");
+	    	System.out.println("         Log in          ");
 			System.out.println("=========================");
-                        System.out.print("Enter your name: ");
-            		custObj.nextLine();
-            		String logInName = custObj.nextLine();
-            		System.out.println("Welcome back! " + logInName);
-            		MainMenu();
+            System.out.print("Enter your name: ");
+            custObj.nextLine();
+            String logInName = custObj.nextLine();
+            System.out.println("Welcome back! " + logInName);
+            MainMenu();
         }
         
         else if(selection == 3)
