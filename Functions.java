@@ -67,12 +67,20 @@ public class Functions {
             List<String[]> checkInRows = new LinkedList<String[]>();
             String[] names = {"Siti","Ricardo","Jonathan","Dio","Ghorno"};
             String[] shops = {"Walmart","7-Eleven","FamilyMart","Tesco","Sunway"};
+            Long[] times = new Long[30];
+            //List to iterate to put in CSV
+
+            for (int i=1; i <= 30; i++) {
+                long num = (long)1609764011 - (long)(Math.random()*(86400-(0+1)+(0)));
+                times[i] = num;
+
+            }
+            
 
             for(int i=1; i <= 30; i++) {
                 
                 //Generate time
-                long num = (long)1609764011 - (long)(Math.random()*(86400-(0+1)+(0)));
-
+                
                 //Pick a name
                 Random generate = new Random();
                 
@@ -81,9 +89,9 @@ public class Functions {
                 String name = names[randomIndex];
                 String shop = shops[randomIndex2];
 
-                checkInRows.add(new String[]{Integer.toString(i), name, Long.toString(num), shop});
-
             }
+
+            
             csvWriteCheckin.writeAll(checkInRows);
             csvWriteCheckin.close();
         }
@@ -103,7 +111,7 @@ public class Functions {
 
         //Iterate through customer list to find the name
         for (int i= 0; i < customerData.size(); i++) {
-            if(customerData(i)[1].equalsIgnoreCase(name)) {
+            if(customerData.get(i)[2].equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -118,11 +126,6 @@ public class Functions {
 
     }
 
-    /*
-    public static LocalDateTime getDateTime(long seconds) { 
-        return LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
-    }
-    */
 
     public static LocalDate getDate(String seconds) {
         long day = Long.parseLong(seconds) / 86400;
@@ -136,5 +139,16 @@ public class Functions {
         }
 
         return LocalTime.ofSecondOfDay(second);
+    }
+
+    public static String addSpace(String variable) {
+        int variableLength = variable.length();
+        String returnString = "";
+        
+        while(variableLength != 12) {
+            returnString += " ";
+            variableLength++;
+        }
+        return returnString;
     }
 }

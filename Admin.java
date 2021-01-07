@@ -21,7 +21,7 @@ public class Admin extends Person {
     public void DisplayCustomerDetails(){
         System.out.println("CUSTOMER LIST");
         System.out.println("----------------------------------------");
-        System.out.format("No\t" + "Name\t" + "Phone\t" + "\tStatus");
+        System.out.format("No\t" + "Name        " + "Phone\t" + "Status");
         System.out.println("");
         System.out.println("----------------------------------------");
         
@@ -29,8 +29,8 @@ public class Admin extends Person {
             List<String[]> nameData = Functions.openCSVFile("saves/customer.csv");
 
             for(int i = 0; i < nameData.size(); i++) 
-                //System.out.println(nameData.get(i)[0] + "\t" + nameData.get(i)[2] + "     " + nameData.get(i)[1] + "\t" + nameData.get(i)[3]);
-                System.out.printf("%2d%11s%10d%7s%n",nameData.get(i)[0],nameData.get(i)[2],nameData.get(i)[1],nameData.get(i)[3]);
+                System.out.println(nameData.get(i)[0] + "\t" + nameData.get(i)[2] + Functions.addSpace(nameData.get(i)[2]) + nameData.get(i)[1] + "\t" + nameData.get(i)[3]);
+                //System.out.printf("%2d%11s%10d%7s%n",nameData.get(i)[0],nameData.get(i)[2],nameData.get(i)[1],nameData.get(i)[3]);
         }
     
         catch (IOException e) {
@@ -40,16 +40,16 @@ public class Admin extends Person {
     
     public void DisplayShopDetails() {
         System.out.println("SHOP LIST");
-        System.out.println("-------------------------");
-        System.out.format("No\t" + "Name       " + "Phone\t" + "Manager\t" + "Status");
+        System.out.println("--------------------------------------------------");
+        System.out.format("No\t" + "Name        " + "Phone\t" + "Manager     " + "Status");
         System.out.println("");
-        System.out.println("-------------------------");
+        System.out.println("--------------------------------------------------");
 
         try {
             List<String[]> nameData = Functions.openCSVFile("saves/shop.csv");
 
             for(int i = 0; i < nameData.size(); i++) 
-                System.out.format(nameData.get(i)[0] + "\t" + nameData.get(i)[1] + "\t" + nameData.get(i)[2] + "\t" + nameData.get(i)[3] + "\t" + nameData.get(i)[4] + "\n");
+                System.out.format(nameData.get(i)[0] + "\t" + nameData.get(i)[1] + Functions.addSpace(nameData.get(i)[1]) + nameData.get(i)[2] + "\t" + nameData.get(i)[3] + Functions.addSpace(nameData.get(i)[3]) + nameData.get(i)[4] + "\n");
         }
     
         catch (IOException e) {
