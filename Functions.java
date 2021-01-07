@@ -1,6 +1,8 @@
 import com.opencsv.CSVWriter;
 import com.opencsv.CSVReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -67,27 +69,35 @@ public class Functions {
             List<String[]> checkInRows = new LinkedList<String[]>();
             String[] names = {"Siti","Ricardo","Jonathan","Dio","Ghorno"};
             String[] shops = {"Walmart","7-Eleven","FamilyMart","Tesco","Sunway"};
-            Long[] times = new Long[30];
+            long[] times = new long[30];
+            
+            Random generate = new Random();
+            
             //List to iterate to put in CSV
 
-            for (int i=1; i <= 30; i++) {
-                long num = (long)1609764011 - (long)(Math.random()*(86400-(0+1)+(0)));
+            for (int i=0; i < 30; i++) {
+                long num = 1609764011 - (long)(Math.random()*(86400-(0+1)+(0)));
+                System.out.println(num);
                 times[i] = num;
 
             }
-            
-
-            for(int i=1; i <= 30; i++) {
+            Arrays.sort(times);
+            for(int i=0; i < 30; i++) {
                 
-                //Generate time
+                /*
+                for(int j=0; j < 30; j++) {
+                    if(times[j] <= tempLong)
+                        tempLong = times[j];
+                        tempindex = j; 
+                }
                 
-                //Pick a name
-                Random generate = new Random();
-                
+                */
                 int randomIndex = generate.nextInt(names.length);
                 int randomIndex2 = generate.nextInt(shops.length);
                 String name = names[randomIndex];
                 String shop = shops[randomIndex2];
+
+                checkInRows.add(new String[]{Integer.toString(i),name,Long.toString(times[i]),shop});
 
             }
 

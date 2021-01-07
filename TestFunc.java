@@ -4,7 +4,7 @@ public class TestFunc {
     
     public static void main(String[] args) {
         //
-    //Functions.LoadPeople();
+    Functions.LoadPeople();
         //Testing Flag
     Admin admin = new Admin();
         //admin.changeToCase("Siti");
