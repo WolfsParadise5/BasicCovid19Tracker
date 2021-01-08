@@ -1,7 +1,5 @@
 import java.util.*;
-
-//import jdk.vm.ci.code.Register;
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter; 
@@ -18,7 +16,7 @@ public class Customer extends Person {
     public ArrayList<Customer> customerData(){
         ArrayList<Customer> custData = new ArrayList<>();
         List<String> data = null; 
-        try {data = readCSV.readFromFile("customer.csv");}
+        try {data = readCSV.readFromFile("saves/customer.csv");}
         catch (IOException e){}
         for (int i = 1; i < data.size(); i++){
             String[] items = data.get(i).split(",");
@@ -38,75 +36,35 @@ public class Customer extends Person {
         ArrayList<Customer> allCustomer = customerData();
         Customer registerCustomer = new Customer(no, phone, name, "Normal");
         allCustomer.add(registerCustomer);
-        try{readCSV.saveToFile(allCustomer, "customer.csv", "No,Phone,Username,Status");}
+        try{readCSV.saveToFile(allCustomer, "saves/customer.csv", "No,Phone,Username,Status");}
         catch (IOException e){}
     }
+
+    public static ArrayList<String> recordData(){
+        ArrayList<String> shopList = new ArrayList<>();
+        List<String> shop = null; 
+        try{
+            shop = readCSV.readFromFile("saves/shop.csv");
+        } catch (IOException e){}
+        for (int i = 1; i < shop.size(); i++){
+            String[] items = shop.get(i).split(",");
+            shopList.add(items[1]);
+        }
+        return shopList;
+    }
+
+    public static void recordHistory(String name, String date, String time, String shop){
+        int no = readCSV.row("record.csv");
+        System.out.println("ID:" + no);
+        ArrayList<String> allRecord = new ArrayList<String>();
+        allRecord.add(no + "," + date + "," + time + "," + name + "," + shop);
+        try{readCSV.saveToFileRecord(allRecord, "saves/record.csv", "No,Date,Time,Customer,Shop");}
+        catch (IOException e){}
+    }
+
 }
 
 class CustomerApp{
-    static void MainMenu()
-    {
-        do{
-        Scanner mainObj = new Scanner(System.in); 
-        System.out.println("=========================");
-        System.out.println("|       Main Menu       |");
-        System.out.println("=========================");
-        System.out.println("1. Check my status");
-        System.out.println("2. Check In");
-        System.out.println("3. History");
-        System.out.println("4. Log Out");
-        System.out.print("->");
-        int mainSelect = mainObj.nextInt();
-
-        if (mainSelect == 1)
-        {
-            System.out.println("=========================");
-            System.out.println("|         Status        |");
-            System.out.println("=========================");
-            System.out.println("Your status is :");
-        }
-
-        else if (mainSelect == 2)
-        {
-			LocalDateTime date = LocalDateTime.now();
-            LocalDateTime time = LocalDateTime.now();
-			DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-            System.out.println("=========================");
-            System.out.println("|        Check In       |");
-            System.out.println("=========================");
-            System.out.print("Please enter your location to check in: ");
-            mainObj.nextLine();
-            String location = mainObj.nextLine();
-            System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
-        }
-
-        else if(mainSelect == 3)
-        {
-            System.out.println("=========================");
-            System.out.println("|        History        |");
-            System.out.println("=========================");
-            System.out.println("This is the list of locations you visited");
-            System.out.println("----------------------------------------");
-            System.out.format("No\t" + "Date\t" + "Time\t" + "Location\t");
-            System.out.println("");
-            System.out.println("----------------------------------------");
-            System.out.println(" ");
-        }
-        
-        else if(mainSelect == 4)
-        {
-            break;
-        }
-
-        else
-        {
-            System.out.println("Invalid Input. Please try again.");
-        }
-        mainObj.close();
-    } while (true);
-    }
-
     public static void main(String[] args) {
 	do{
 		Scanner custObj = new Scanner(System.in);
@@ -142,8 +100,18 @@ class CustomerApp{
             System.out.print("Enter your name: ");
             custObj.nextLine();
             String logInName = custObj.nextLine();
-            System.out.println("Welcome back! " + logInName);
-            MainMenu();
+
+            try{
+                boolean findName = Functions.isNameExists(logInName);
+                if (findName){
+                    System.out.println("Welcome back! " + logInName);
+                    Menu(logInName);
+                }
+                else{
+                    System.out.println("Username not found");
+                }
+            }
+            catch(Exception E){E.printStackTrace();}
         }
         
         else if(selection == 3)
@@ -157,5 +125,78 @@ class CustomerApp{
             System.out.println("Invalid input");
         }
     } while (true);
-}
+    
+    }
+    public static void Menu(String logInName)
+    {
+        do{
+            Scanner mainObj = new Scanner(System.in); 
+            System.out.println("=========================");
+            System.out.println("|       Main Menu       |");
+            System.out.println("=========================");
+            System.out.println("1. Check my status");
+            System.out.println("2. Check In");
+            System.out.println("3. History");
+            System.out.println("4. Log Out");
+            System.out.print("->");
+            int mainSelect = mainObj.nextInt();
+
+            if (mainSelect == 1)
+            {
+                System.out.println("=========================");
+                System.out.println("|         Status        |");
+                System.out.println("=========================");
+                System.out.println("Your status is :");
+            }
+
+            else if (mainSelect == 2)
+            {
+                LocalDateTime date = LocalDateTime.now();
+                LocalDateTime time = LocalDateTime.now();
+                DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String strDate = dtfDate.format(date);
+                String strTime = dtfTime.format(time);
+                System.out.println("=========================");
+                System.out.println("|        Check In       |");
+                System.out.println("=========================");
+                System.out.print("Please enter your location to check in: ");
+                mainObj.nextLine();
+                String location = mainObj.nextLine();
+                ArrayList<String>shopName = Customer.recordData();
+                if (shopName.contains(location)){
+                    System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
+                    Customer cust = new Customer();
+                    cust.recordHistory(logInName, strDate, strTime, location);
+                }
+                else{
+                    System.out.println("Location not found.");
+                }
+            }
+
+            else if(mainSelect == 3)
+            {
+                System.out.println("=========================");
+                System.out.println("|        History        |");
+                System.out.println("=========================");
+                System.out.println("This is the list of locations you visited");
+                System.out.println("----------------------------------------");
+                System.out.format("No\t" + "Date\t" + "Time\t" + "Location\t");
+                System.out.println("");
+                System.out.println("----------------------------------------");
+                System.out.println(" ");
+            }
+        
+            else if(mainSelect == 4)
+            {
+                break;
+            }
+
+            else
+            {
+                System.out.println("Invalid Input. Please try again.");
+            }
+        } 
+        while (true);
+    }
 }
