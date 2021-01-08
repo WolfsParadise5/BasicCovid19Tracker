@@ -21,9 +21,19 @@ public class readCSV {
 
     public static int row(String filename){
         List<String> data = null; 
-        try {data = readCSV.readFromFile("customer.csv");}
+        try {data = readCSV.readFromFile("saves/customer.csv");}
         catch (IOException e){}
         return data.size();
+    }
+
+    public static void saveToFileRecord(ArrayList<String> obj, String filename, String header) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append(header + '\n');
+        for (int i = 0; i < obj.size(); i++) {
+            sb.append (obj.get(i).toString() + "\n");
+            System.out.println(sb);
+        }
+        Files.write(Paths.get(filename), sb.toString().getBytes());
     }
 
 }
