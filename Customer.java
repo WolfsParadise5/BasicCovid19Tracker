@@ -1,5 +1,11 @@
 import java.util.*;
-import java.io.FileNotFoundException;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter; 
@@ -31,7 +37,7 @@ public class Customer extends Person {
     }
 
     public void Register(String phone, String name){
-        int no = readCSV.row("customer.csv");
+        int no = readCSV.row("saves/customer.csv");
         System.out.println("ID:" + no);
         ArrayList<Customer> allCustomer = customerData();
         Customer registerCustomer = new Customer(no, phone, name, "Normal");
@@ -40,25 +46,38 @@ public class Customer extends Person {
         catch (IOException e){}
     }
 
-    public static ArrayList<String> recordData(){
-        ArrayList<String> shopList = new ArrayList<>();
-        List<String> shop = null; 
-        try{
-            shop = readCSV.readFromFile("saves/shop.csv");
-        } catch (IOException e){}
-        for (int i = 1; i < shop.size(); i++){
+    public static boolean recordData(String path, String shopName)throws IOException{
+        List<String> shop;
+        shop = readCSV.readFromFile(path);
+        for (int i = 0; i < shop.size(); i++){
             String[] items = shop.get(i).split(",");
-            shopList.add(items[1]);
+            if(items[1].contains(shopName)){
+                return true;
+            }
         }
-        return shopList;
+        return false; 
     }
 
     public static void recordHistory(String name, String date, String time, String shop){
-        int no = readCSV.row("record.csv");
-        System.out.println("ID:" + no);
-        ArrayList<String> allRecord = new ArrayList<String>();
-        allRecord.add(no + "," + date + "," + time + "," + name + "," + shop);
-        try{readCSV.saveToFileRecord(allRecord, "saves/record.csv", "No,Date,Time,Customer,Shop");}
+        try{
+            int count;
+            File file = new File("saves/customer.csv");
+            CSVReader reader = new CSVReader(new FileReader(file), ',');
+            List<String[]> recordList = reader.readAll();
+            for (int i = 1; i < recordList.size(); i++){
+                String[] items = recordList.get(i);
+                for(int j = 1; j < items.length; j++){
+                    count = Integer.parseInt(items[0]); 
+                }
+                recordList.add(new String[]{Integer.toString(count) + date + time + name + shop});
+                //ArrayList<String> recordList = new ArrayList<String>();
+            }
+            FileWriter fileWriter = new FileWriter(new File("saves/record.csv"));
+            CSVWriter writer = new CSVWriter(fileWriter, ',');
+            writer.writeAll(recordList);
+            writer.flush();
+            writer.close();
+        }
         catch (IOException e){}
     }
 
@@ -163,16 +182,19 @@ class CustomerApp{
                 System.out.print("Please enter your location to check in: ");
                 mainObj.nextLine();
                 String location = mainObj.nextLine();
-                ArrayList<String>shopName = Customer.recordData();
-                if (shopName.contains(location)){
-                    System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
-                    Customer cust = new Customer();
-                    cust.recordHistory(logInName, strDate, strTime, location);
+                try{List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
+                    if (Customer.recordData("save/shop.csv", location)){
+                        System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
+                        Customer.recordHistory(logInName, strDate, strTime, location);
+                    }
+                    else{
+                        System.out.println("Location not found.");
+
+                    }
                 }
-                else{
-                    System.out.println("Location not found.");
+                catch (IOException E){};
+               
                 }
-            }
 
             else if(mainSelect == 3)
             {
