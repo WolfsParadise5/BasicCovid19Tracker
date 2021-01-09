@@ -128,6 +128,19 @@ public class Functions {
         return false;
     }
 
+    public static boolean isShopExists(String shopName) throws IOException, FileNotFoundException {
+        //Open the CSV
+        List<String[]> customerData = openCSVFile("saves/shop.csv");
+
+        //Iterate through customer list to find the name
+        for (int i= 0; i < customerData.size(); i++) {
+            if(customerData.get(i)[1].equalsIgnoreCase(shopName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static List<String[]> openCSVFile(String filePath) throws IOException{
 
         CSVReader getData = new CSVReader(new FileReader(filePath),',');
