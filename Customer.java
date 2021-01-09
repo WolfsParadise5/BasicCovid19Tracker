@@ -1,11 +1,4 @@
 import java.util.*;
-
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter; 
@@ -72,6 +65,9 @@ public class Customer extends Person {
          * 
          * }
          */
+        if(recData != null){
+            recData.remove(0);
+        }
         return recData;
     }
 
@@ -79,13 +75,17 @@ public class Customer extends Person {
         ArrayList<String> allRecord = new ArrayList<>();
         int no = readCSV.row("saves/record.csv");
         List<String> history = recordData();
+        
+        history.add(Integer.toString(no) + "," + date + "," + time + "," + name + "," + shop);
         for (int i = 0; i < history.size(); i++){
             allRecord.add(history.get(i));
         }
-        System.out.println("ID:" + no);
-        history.add(Integer.toString(no) + "," + date + "," + time + "," + name + "," + shop);
+        //System.out.println("ID:" + no);
+    
         try{readCSV.saveToFileRecord(allRecord, "saves/record.csv", "No,Date,Time,Name,Shop");}
         catch (IOException e){}
+        
+        
     }
 
 }
@@ -172,7 +172,21 @@ class CustomerApp{
                 System.out.println("=========================");
                 System.out.println("|         Status        |");
                 System.out.println("=========================");
-                System.out.println("Your status is :");
+                System.out.print("Your status is :");
+                try {
+                    List<String[]> nameData = Functions.openCSVFile("saves/customer.csv");
+                    int index = 0;
+                    for(int i=0; i < nameData.size(); i++) {
+                        if (nameData.get(i)[2].equalsIgnoreCase(logInName)) {
+                            System.out.println(nameData.get(i)[3]);
+                            index++;
+                        } 
+        
+                    }
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             else if (mainSelect == 2)
@@ -216,6 +230,21 @@ class CustomerApp{
                 System.out.format("No\t" + "Date\t" + "Time\t" + "Location\t");
                 System.out.println("");
                 System.out.println("----------------------------------------");
+                try {
+                    List<String[]> nameData = Functions.openCSVFile("saves/record.csv");
+                    int index = 1;
+                    for(int i=0; i < nameData.size(); i++) {
+                        if (nameData.get(i)[3].equalsIgnoreCase(logInName)) {
+                            System.out.println(nameData.get(index)[0] + "\t" + nameData.get(i)[1] + "\t" + nameData.get(i)[2] + "\t" + nameData.get(i)[4]);
+                            index++;
+                        } 
+        
+                    }
+                }
+        
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(" ");
             }
         
