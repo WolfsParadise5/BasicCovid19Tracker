@@ -2,7 +2,7 @@
 
 public class Person {
     
-    private String name;
+    public String name;
     private String phone;
     private String[] statuslist = {"Normal", "Case", "Close"};
     private String status;
