@@ -8,8 +8,8 @@ public class TestFunc {
         //Testing Flag
     Admin admin = new Admin();
     admin.changeToCase("Siti");
-    Shop shop = new Shop("Fong","Walmart","5478588","Normal");
-    shop.checkStatus();
+    //Shop shop = new Shop("Fong","Walmart","5478588","Normal");
+    //shop.checkStatus();
         /*Testing millisecond
         Instant instant = Instant.now();
         System.out.println(instant.getEpochSecond());

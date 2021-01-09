@@ -24,7 +24,7 @@ public class Shop extends Person {
             List<String[]> nameData = Functions.openCSVFile("saves/shop.csv");
             int index = 0;
             for(int i=0; i < nameData.size(); i++) {
-                if (nameData.get(i)[1].equalsIgnoreCase(name)) {
+                if (nameData.get(i)[1].equalsIgnoreCase(getName())) {
                     System.out.println(nameData.get(index)[0] + "\t" + nameData.get(index)[1] + Functions.addSpace(nameData.get(index)[1]) + nameData.get(index)[2] + "\t" + nameData.get(index)[3] + Functions.addSpace(nameData.get(index)[3]) + nameData.get(index)[4]);
                     index++;
                 } 

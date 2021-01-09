@@ -11,7 +11,7 @@ public class RunFile {
         //Main Menu
         do{
             
-            Scanner signIn = new Scanner(System.in);
+            Scanner custObj = new Scanner(System.in);
             
             System.out.println("=========================");
             System.out.println("|  Sign in or Register? |");
@@ -21,33 +21,31 @@ public class RunFile {
             System.out.println("3. Exit");
             System.out.print("->");
             
-            int selection = signIn.nextInt();
-            signIn.close();
+            int selection = custObj.nextInt();
+            //signIn.close();
     
             if(selection == 1)
             {
-                Scanner register = new Scanner(System.in);
                 
                 System.out.println("=========================");
                 System.out.println("   Register an account   ");
                 System.out.println("=========================");
                 System.out.print("Enter your name: ");
 
-                register.nextLine();
-                String userName = register.nextLine();
+                custObj.nextLine();
+                String userName = custObj.nextLine();
 
                 System.out.print("Enter your phone number: ");
-                String phoneNo = register.nextLine();
+                String phoneNo = custObj.nextLine();
 
                 Customer c = new Customer(); 
                 c.Register(phoneNo, userName);
                 System.out.println("Thank you for your registration " + userName + "." + "Your phone number is " + phoneNo);
-                register.close();
+                //register.close();
             }
             
             else if(selection == 2)
             {
-                Scanner logIn = new Scanner(System.in);
 
                 System.out.println("=========================");
                 System.out.println("         Log in          ");
@@ -59,14 +57,14 @@ public class RunFile {
                 
                 System.out.println("1. Customer");
                 System.out.println("2. Shop");
-                int typeLoginSelection = logIn.nextInt();
+                int typeLoginSelection = custObj.nextInt();
 
                 //Customer
                 if (typeLoginSelection == 1) {
                     System.out.println("");
                     System.out.print("Enter your name: ");
-                    logIn.nextLine();
-                    String logInName = logIn.nextLine();
+                    custObj.nextLine();
+                    String logInName = custObj.nextLine();
                     
                     if (logInName != "admin") {   
                         try{
@@ -96,8 +94,8 @@ public class RunFile {
                 else if (typeLoginSelection == 2) {
                     System.out.println("");
                     System.out.print("Enter your name: ");
-                    logIn.nextLine();
-                    String logInName = logIn.nextLine();
+                    custObj.nextLine();
+                    String logInName = custObj.nextLine();
 
                     try {
                         boolean findShop = Functions.isShopExists(logInName);
@@ -119,19 +117,21 @@ public class RunFile {
                 else {
                     System.out.println("Invalid input, please try again");
                 }
-                logIn.close();
+                custObj.close();
 
                 
             }
             
             else if(selection == 3)
             {
+                custObj.close();
                 System.out.println("Thanks for your usage! Please come back again.");
                 break;
             }
     
             else
-            {   
+            {
+                custObj.close();   
                 System.out.println("Invalid input");
             }
         } 
