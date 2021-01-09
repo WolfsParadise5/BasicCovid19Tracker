@@ -1,8 +1,8 @@
 import com.opencsv.CSVWriter;
 import com.opencsv.CSVReader;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.LinkedList;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+//import java.time.LocalDateTime;
+//import java.time.ZoneOffset;
 import java.time.LocalTime;
 
 public class Functions {
@@ -114,7 +114,7 @@ public class Functions {
 
     }
 
-    public boolean isNameExists(String name) throws IOException, FileNotFoundException {
+    public static boolean isNameExists(String name) throws IOException, FileNotFoundException {
 
         //Open the CSV
         List<String[]> customerData = openCSVFile("saves/customer.csv");

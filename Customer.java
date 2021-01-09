@@ -64,9 +64,9 @@ public class Customer extends Person {
             File file = new File("saves/customer.csv");
             CSVReader reader = new CSVReader(new FileReader(file), ',');
             List<String[]> recordList = reader.readAll();
-            for (int i = 1; i < recordList.size(); i++){
+            for (int i = 0; i < recordList.size(); i++){
                 String[] items = recordList.get(i);
-                for(int j = 1; j < items.length; j++){
+                for(int j = 0; j < items.length; j++){
                     count = Integer.parseInt(items[0]); 
                 }
                 recordList.add(new String[]{Integer.toString(count) + date + time + name + shop});
@@ -182,8 +182,11 @@ class CustomerApp{
                 System.out.print("Please enter your location to check in: ");
                 mainObj.nextLine();
                 String location = mainObj.nextLine();
-                try{List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
-                    if (Customer.recordData("save/shop.csv", location)){
+                try {
+                    
+                    //List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
+                    
+                    if (Customer.recordData("saves/shop.csv", location)){
                         System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
                         Customer.recordHistory(logInName, strDate, strTime, location);
                     }
@@ -194,7 +197,7 @@ class CustomerApp{
                 }
                 catch (IOException E){};
                
-                }
+            }
 
             else if(mainSelect == 3)
             {

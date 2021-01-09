@@ -158,7 +158,6 @@ public class Admin extends Person {
                                 
                                 String tempOneString = shopByCust.get(l);
                                 String tempTwoString = recordBody.get(j)[3];
-                                System.out.println(tempOneString + tempTwoString);
 
                                 if (tempOneString.equals(tempTwoString)) { //prob
                                     peopleInfected.addElement(recordBody.get(j)[1]);
