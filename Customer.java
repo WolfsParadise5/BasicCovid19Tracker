@@ -58,26 +58,33 @@ public class Customer extends Person {
         return false; 
     }
 
-    public static void recordHistory(String name, String date, String time, String shop){
-        try{
-            int count;
-            File file = new File("saves/customer.csv");
-            CSVReader reader = new CSVReader(new FileReader(file), ',');
-            List<String[]> recordList = reader.readAll();
-            for (int i = 0; i < recordList.size(); i++){
-                String[] items = recordList.get(i);
-                for(int j = 0; j < items.length; j++){
-                    count = Integer.parseInt(items[0]); 
-                }
-                recordList.add(new String[]{Integer.toString(count) + date + time + name + shop});
-                //ArrayList<String> recordList = new ArrayList<String>();
-            }
-            FileWriter fileWriter = new FileWriter(new File("saves/record.csv"));
-            CSVWriter writer = new CSVWriter(fileWriter, ',');
-            writer.writeAll(recordList);
-            writer.flush();
-            writer.close();
+    public static List<String> recordData() {
+        List<String> recData = null;
+        try {
+            recData = readCSV.readFromFile("saves/record.csv");
+        } catch (IOException e) {
         }
+        /*
+         * for (int i = 1; i < recData.size(); i++){ String[] items =
+         * re.get(i).split(","); Customer tempCustomer = new
+         * Customer(Integer.parseInt(items[0]), items[1], items[2], items[3]);
+         * custData.add(tempCustomer);
+         * 
+         * }
+         */
+        return recData;
+    }
+
+    public static void checkIn(String name, String date, String time, String shop) {
+        ArrayList<String> allRecord = new ArrayList<>();
+        int no = readCSV.row("saves/record.csv");
+        List<String> history = recordData();
+        for (int i = 0; i < history.size(); i++){
+            allRecord.add(history.get(i));
+        }
+        System.out.println("ID:" + no);
+        history.add(Integer.toString(no) + "," + date + "," + time + "," + name + "," + shop);
+        try{readCSV.saveToFileRecord(allRecord, "saves/record.csv", "No,Date,Time,Name,Shop");}
         catch (IOException e){}
     }
 
@@ -188,7 +195,7 @@ class CustomerApp{
                     
                     if (Customer.recordData("saves/shop.csv", location)){
                         System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
-                        Customer.recordHistory(logInName, strDate, strTime, location);
+                        Customer.checkIn(logInName, strDate, strTime, location);
                     }
                     else{
                         System.out.println("Location not found.");
