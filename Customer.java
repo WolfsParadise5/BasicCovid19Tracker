@@ -1,8 +1,11 @@
 import java.util.*;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter; 
 
 public class Customer extends Person {
     private int no;
@@ -12,18 +15,6 @@ public class Customer extends Person {
 	Customer(int no, String name, String phone, String status) {
 		super(name, phone, status);
         this.no = no;
-    }
-    public ArrayList<Customer> customerData(){
-        ArrayList<Customer> custData = new ArrayList<>();
-        List<String> data = null; 
-        try {data = readCSV.readFromFile("saves/customer.csv");}
-        catch (IOException e){}
-        for (int i = 1; i < data.size(); i++){
-            String[] items = data.get(i).split(",");
-            Customer tempCustomer = new Customer(Integer.parseInt(items[0]), items[1], items[2], items[3]);
-            custData.add(tempCustomer);
-        }
-        return custData;
     }
 
     public String toString(){
@@ -95,192 +86,35 @@ public class Customer extends Person {
         return recData;
     }
 
-    public static void checkIn(String name, String date, String time, String shop) {
-        ArrayList<String> allRecord = new ArrayList<>();
-        int no = readCSV.row("saves/record.csv");
-        List<String> history = recordData();
+    public static void checkIn(String name, long seconds, String shop) throws IOException {
         
-        history.add(Integer.toString(no) + "," + date + "," + time + "," + name + "," + shop);
-        for (int i = 0; i < history.size(); i++){
-            allRecord.add(history.get(i));
+        File file = new File("saves/records.csv");
+
+        //Read existing file
+        try {
+            CSVReader reader = new CSVReader(new FileReader(file), ',');
+            List<String[]> csvbody = reader.readAll();
+
+            int i = csvbody.size();
+            csvbody.add(new String[]{Integer.toString(i+1),name,Long.toString(seconds),shop});
+
+            reader.close();
+
+            FileWriter fi = new FileWriter(file);
+            CSVWriter writer = new CSVWriter(fi,',');
+
+            writer.writeAll(csvbody);
+            writer.flush();
+            writer.close();
         }
-        //System.out.println("ID:" + no);
-    
-        try{readCSV.saveToFileRecord(allRecord, "saves/record.csv", "No,Date,Time,Name,Shop");}
-        catch (IOException e){}
-        
-        
+
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }        
     }
 
-}
-
-class CustomerApp{
-    public static void main(String[] args) {
-	do{
-		Scanner custObj = new Scanner(System.in);
-		System.out.println("=========================");
-		System.out.println("|  Sign in or Register? |");
-		System.out.println("=========================");
-		System.out.println("1. Register");
-        System.out.println("2. Log In");
-        System.out.println("3. Exit");
-		System.out.print("->");
-		int selection = custObj.nextInt();
-
-		if(selection == 1)
-		{
-		    System.out.println("=========================");
-	        System.out.println("   Register an account   ");
-		    System.out.println("=========================");
-		    System.out.print("Enter your name: ");
-		    custObj.nextLine();
-		    String userName = custObj.nextLine();
-		    System.out.print("Enter your phone number: ");
-            String phoneNo = custObj.nextLine();
-            Customer c = new Customer();
-            c.Register(phoneNo, userName);
-		    System.out.println("Thank you for your registration " + userName + "." + "Your phone number is " + phoneNo);
-        }
-		
-		else if(selection == 2)
-		{
-			System.out.println("=========================");
-	    	System.out.println("         Log in          ");
-			System.out.println("=========================");
-            System.out.print("Enter your name: ");
-            custObj.nextLine();
-            String logInName = custObj.nextLine();
-
-            try{
-                boolean findName = Functions.isNameExists(logInName);
-                if (findName){
-                    System.out.println("Welcome back! " + logInName);
-                    Menu(logInName);
-                }
-                else{
-                    System.out.println("Username not found");
-                }
-            }
-            catch(Exception E){E.printStackTrace();}
-        }
-        
-        else if(selection == 3)
-        {
-            System.out.println("Thanks for your usage! Please come back again.");
-            break;
-        }
-
-        else
-        {   
-            System.out.println("Invalid input");
-        }
-    } while (true);
-    
-    }
-    public static void Menu(String logInName)
-    {
-        do{
-            Scanner mainObj = new Scanner(System.in); 
-            System.out.println("=========================");
-            System.out.println("|       Main Menu       |");
-            System.out.println("=========================");
-            System.out.println("1. Check my status");
-            System.out.println("2. Check In");
-            System.out.println("3. History");
-            System.out.println("4. Log Out");
-            System.out.print("->");
-            int mainSelect = mainObj.nextInt();
-
-            if (mainSelect == 1)
-            {
-                System.out.println("=========================");
-                System.out.println("|         Status        |");
-                System.out.println("=========================");
-                System.out.print("Your status is :");
-                try {
-                    List<String[]> nameData = Functions.openCSVFile("saves/customer.csv");
-                    for(int i=0; i < nameData.size(); i++) {
-                        if (nameData.get(i)[1].equalsIgnoreCase(logInName)) {
-                            System.out.print(nameData.get(i)[3]);
-                            System.out.println("");
-                        } 
-        
-                    }
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            else if (mainSelect == 2)
-            {
-                LocalDateTime date = LocalDateTime.now();
-                LocalDateTime time = LocalDateTime.now();
-                DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-                String strDate = dtfDate.format(date);
-                String strTime = dtfTime.format(time);
-                System.out.println("=========================");
-                System.out.println("|        Check In       |");
-                System.out.println("=========================");
-                System.out.print("Please enter your location to check in: ");
-                mainObj.nextLine();
-                String location = mainObj.nextLine();
-                try {
-                    
-                    //List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
-                    
-                    if (Customer.recordData("saves/shop.csv", location)){
-                        System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
-                        Customer.checkIn(logInName, strDate, strTime, location);
-                    }
-                    else{
-                        System.out.println("Location not found.");
-
-                    }
-                }
-                catch (IOException E){};
-               
-            }
-
-            else if(mainSelect == 3)
-            {
-                System.out.println("=========================");
-                System.out.println("|        History        |");
-                System.out.println("=========================");
-                System.out.println("This is the list of locations you visited");
-                System.out.println("----------------------------------------");
-                System.out.format("No\t" + "Date\t" + "Time\t" + "Location\t");
-                System.out.println("");
-                System.out.println("----------------------------------------");
-                try {
-                    List<String[]> nameData = Functions.openCSVFile("saves/record.csv");
-                    int index = 1;
-                    for(int i=0; i < nameData.size(); i++) {
-                        if (nameData.get(i)[3].equalsIgnoreCase(logInName)) {
-                            System.out.println(nameData.get(index)[0] + "\t" + Functions.getDate(nameData.get(i)[2]) + "\t" + Functions.getTime(nameData.get(i)[2]) + "\t" + nameData.get(i)[4]);
-                            index++;
-                        } 
-        
-                    }
-                }
-        
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(" ");
-            }
-        
-            else if(mainSelect == 4)
-            {
-                break;
-            }
-
-            else
-            {
-                System.out.println("Invalid Input. Please try again.");
-            }
-        } 
-        while (true);
-    }
 }

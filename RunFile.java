@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
@@ -188,8 +189,6 @@ public class RunFile {
                 LocalDateTime time = LocalDateTime.now();
                 DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-                String strDate = dtfDate.format(date);
-                String strTime = dtfTime.format(time);
                 System.out.println("=========================");
                 System.out.println("|        Check In       |");
                 System.out.println("=========================");
@@ -198,11 +197,11 @@ public class RunFile {
                 String location = mainObj2.nextLine();
                 try {
                     
-                    List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
+                    //List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
                     
                     if (Customer.recordData("saves/shop.csv", location)){
                         System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
-                        Customer.checkIn(logInName, strDate, strTime, location);
+                        Customer.checkIn(logInName, date.toEpochSecond(ZoneOffset.UTC), location);
                     }
                     else{
                         System.out.println("Location not found.");

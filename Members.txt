@@ -1,0 +1,7 @@
+Nagaindran a/l Kanaseelayagam 1191100776
+Fong Zheng Wei 1191100350
+
+TASK DISTRIBUTION
+1. Customer and shop - Fong & Nagaindran 50% and 50%
+2. Admin - Nagaindran 100%
+3. Javadoc - Fong 100%

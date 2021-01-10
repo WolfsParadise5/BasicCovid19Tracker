@@ -1,11 +1,6 @@
-import com.opencsv.CSVWriter;
 import com.opencsv.CSVReader;
-
 import java.util.ArrayList;
-//import java.util.ArrayList;
 import java.util.Arrays;
-//import java.util.Collections;
-import java.util.LinkedList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,8 +11,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.time.LocalDate;
-//import java.time.LocalDateTime;
-//import java.time.ZoneOffset;
 import java.time.LocalTime;
 
 public class Functions {
@@ -174,6 +167,7 @@ public class Functions {
         return LocalTime.ofSecondOfDay(second);
     }
 
+
     public static String addSpace(String variable) {
         int variableLength = variable.length();
         String returnString = "";
@@ -190,17 +184,4 @@ public class Functions {
         return checkFile.exists();
     }
     
-    public static int returnNextNumber(String filepath) throws IOException{
-
-        int num = 0;
-        List<String[]> contents = openCSVFile(filepath);
-        for(int i=0; i < contents.size(); i++) {
-            num = i;
-
-        
-
-        }
-        return num + 1;
-    }
-
 }

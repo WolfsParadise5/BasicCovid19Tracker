@@ -42,7 +42,7 @@ public class Admin extends Person {
             List<String[]> nameData = Functions.openCSVFile("saves/customer.csv");
 
             for(int i = 0; i < nameData.size(); i++) 
-                System.out.println(nameData.get(i)[0] + "\t" + nameData.get(i)[2] + Functions.addSpace(nameData.get(i)[2]) + nameData.get(i)[1] + "\t" + nameData.get(i)[3]);
+                System.out.println(nameData.get(i)[0] + "\t" + nameData.get(i)[1] + Functions.addSpace(nameData.get(i)[1]) + nameData.get(i)[2] + "\t" + nameData.get(i)[3]);
                 //System.out.printf("%2d%11s%10d%7s%n",nameData.get(i)[0],nameData.get(i)[2],nameData.get(i)[1],nameData.get(i)[3]);
         }
     
@@ -83,7 +83,7 @@ public class Admin extends Person {
             //Convert timestamp to date and time
             
             for(int i = 0; i < nameData.size(); i++)
-                System.out.println(nameData.get(i)[0] + "\t" + Functions.getDate(nameData.get(i)[2]) + "\t" + Functions.getTime(nameData.get(i)[2]) + "     " + nameData.get(i)[1] + "\t" + nameData.get(i)[3]);
+                System.out.println(nameData.get(i)[0] + "\t" + Functions.getDate(nameData.get(i)[2]) + "\t" + Functions.getTime(nameData.get(i)[2]) + "     " + nameData.get(i)[1] + Functions.addSpace(nameData.get(i)[1]) + nameData.get(i)[3]);
                 
         }
     
@@ -106,7 +106,7 @@ public class Admin extends Person {
                 String[] strArray = csvbody.get(i);
                 for(int j=0; j<strArray.length; j++) {
                     if (strArray[j].equalsIgnoreCase(name)) {
-                        csvbody.get(i)[j+1] = "Case"; 
+                        csvbody.get(i)[j+2] = "Case"; 
                     }
                 }
             }
@@ -147,8 +147,6 @@ public class Admin extends Person {
                         timeInfected.add(tempLong);
                         shopByCust.add(tempCustShop);
 
-                        System.out.println("Time :" + tempLong);
-                        System.out.println("Shop : " + shopByCust);
                     }
                 }
             }
@@ -200,7 +198,8 @@ public class Admin extends Person {
                 for(int j=0; j < custCsvBody.size(); j++) {
                     String[] custStrArray = custCsvBody.get(j);
                     
-                    if (custStrArray[2].equalsIgnoreCase(peopleInfected.get(i))) {
+                    if (custStrArray[1].equalsIgnoreCase(peopleInfected.get(i))) {
+                        if (!peopleInfected.get(i).equalsIgnoreCase(name))
                             custCsvBody.get(j)[3] = "Close"; 
                         }
                 }
