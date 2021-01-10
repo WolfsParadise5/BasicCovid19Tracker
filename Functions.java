@@ -87,7 +87,7 @@ public class Functions {
         FileWriter csvFile = new FileWriter("saves/records.csv");
         
         String[] names = {"Siti","Ricardo","Jonathan","Dio","Ghorno"};
-        String[] shops = {"Walmart","7-Eleven","FamilyMart","Tesco","Sunway"};
+        String[] shops = {"Walmart","99SpeedMart","Tesco","Sunway"};
         long[] times = new long[30];
             
         Random generate = new Random();
@@ -95,7 +95,7 @@ public class Functions {
         //List to iterate to put in CSV
 
         for (int i=0; i < 30; i++) {
-            long num = 1609764011 - (long)(Math.random()*(86400-(0+1)+(0)));
+            long num = System.currentTimeMillis()/1000 - (long)(Math.random()*(86400-(0+1)+(0)));
             System.out.println(num);
             times[i] = num;
 

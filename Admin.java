@@ -88,7 +88,7 @@ public class Admin extends Person {
         }
     
         catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("No saves avalable, exiting...");
         }
     }
     
@@ -200,12 +200,9 @@ public class Admin extends Person {
                 for(int j=0; j < custCsvBody.size(); j++) {
                     String[] custStrArray = custCsvBody.get(j);
                     
-                    for(int k=0; k<custStrArray.length; k++) {
-                        
-                        if (custStrArray[k].equalsIgnoreCase(peopleInfected.get(i))) {
-                            custCsvBody.get(j)[k+2] = "Close"; 
+                    if (custStrArray[2].equalsIgnoreCase(peopleInfected.get(i))) {
+                            custCsvBody.get(j)[3] = "Close"; 
                         }
-                    }
                 }
             }
 
