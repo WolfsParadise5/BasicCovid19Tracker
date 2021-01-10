@@ -48,10 +48,11 @@ public class Functions {
 
         FileWriter csvFile = new FileWriter("saves/customer.csv");
         
-        customer.add(new Customer(1,"Richardo","121174560","Normal"));
+        customer.add(new Customer(1,"Michael","121174560","Normal"));
         customer.add(new Customer(2,"Siti","139856458","Normal"));
         customer.add(new Customer(3,"Dio","194786523","Normal"));
         customer.add(new Customer(4,"Giorno","153489898","Normal"));
+        customer.add(new Customer(5,"Ali","15449898","Normal"));
 
         for(int i = 0; i < customer.size(); i++) {
             csvFile.append(customer.get(i).toString() + "\n");
@@ -96,7 +97,6 @@ public class Functions {
 
         for (int i=0; i < 30; i++) {
             long num = System.currentTimeMillis()/1000 - (long)(Math.random()*(86400-(0+1)+(0)));
-            System.out.println(num);
             times[i] = num;
 
         }
@@ -189,4 +189,18 @@ public class Functions {
         File checkFile = new File(filepath);
         return checkFile.exists();
     }
+    
+    public static int returnNextNumber(String filepath) throws IOException{
+
+        int num = 0;
+        List<String[]> contents = openCSVFile(filepath);
+        for(int i=0; i < contents.size(); i++) {
+            num = i;
+
+        
+
+        }
+        return num + 1;
+    }
+
 }

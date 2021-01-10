@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter; 
@@ -26,17 +27,40 @@ public class Customer extends Person {
     }
 
     public String toString(){
-        return no + "," + getPhone() + ","+ getName() + "," + getStatus();
+        return no + "," + getName() + ","+ getPhone() + "," + getStatus();
     }
 
     public void Register(String phone, String name){
-        int no = readCSV.row("saves/customer.csv");
-        System.out.println("ID:" + no);
-        ArrayList<Customer> allCustomer = customerData();
-        Customer registerCustomer = new Customer(no, phone, name, "Normal");
-        allCustomer.add(registerCustomer);
-        try{readCSV.saveToFile(allCustomer, "saves/customer.csv", "No,Phone,Username,Status");}
+
+        try{
+            int no = 0;
+            ArrayList<Customer> custData = new ArrayList<>();
+            List<String> data = null; 
+            try {data = readCSV.readFromFile("saves/customer.csv");}
+            catch (IOException e){}
+            for (int i = 0; i < data.size(); i++){
+                String[] items = data.get(i).split(",");
+                Customer tempCustomer = new Customer(Integer.parseInt(items[0]), items[1], items[2], items[3]);
+                custData.add(tempCustomer);
+                no = i;
+            }
+
+            FileWriter writeToCSV = new FileWriter("saves/customer.csv");
+            no += 2;
+            System.out.println("ID:" + no);
+            
+            Customer registerCustomer = new Customer(no, name, phone, "Normal");
+            custData.add(registerCustomer);
+            
+            for(int i = 0; i < custData.size(); i++) {
+                writeToCSV.append(custData.get(i).toString() + "\n");
+            }
+
+            writeToCSV.flush();
+            writeToCSV.close();  
+        }
         catch (IOException e){}
+        
     }
 
     public static boolean recordData(String path, String shopName)throws IOException{
@@ -175,11 +199,10 @@ class CustomerApp{
                 System.out.print("Your status is :");
                 try {
                     List<String[]> nameData = Functions.openCSVFile("saves/customer.csv");
-                    int index = 0;
                     for(int i=0; i < nameData.size(); i++) {
-                        if (nameData.get(i)[2].equalsIgnoreCase(logInName)) {
-                            System.out.println(nameData.get(i)[3]);
-                            index++;
+                        if (nameData.get(i)[1].equalsIgnoreCase(logInName)) {
+                            System.out.print(nameData.get(i)[3]);
+                            System.out.println("");
                         } 
         
                     }
@@ -235,7 +258,7 @@ class CustomerApp{
                     int index = 1;
                     for(int i=0; i < nameData.size(); i++) {
                         if (nameData.get(i)[3].equalsIgnoreCase(logInName)) {
-                            System.out.println(nameData.get(index)[0] + "\t" + nameData.get(i)[1] + "\t" + nameData.get(i)[2] + "\t" + nameData.get(i)[4]);
+                            System.out.println(nameData.get(index)[0] + "\t" + Functions.getDate(nameData.get(i)[2]) + "\t" + Functions.getTime(nameData.get(i)[2]) + "\t" + nameData.get(i)[4]);
                             index++;
                         } 
         

@@ -83,7 +83,7 @@ public class RunFile {
                             
                             if (findName){
                                 System.out.println("Welcome back! " + logInName);
-                                CustomerMenu(logInName); //Fix starts here
+                                CustomerMenu(logInName); 
                             }
                             else {
                                 System.out.println("Username not found");
@@ -198,7 +198,7 @@ public class RunFile {
                 String location = mainObj2.nextLine();
                 try {
                     
-                    //List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
+                    List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
                     
                     if (Customer.recordData("saves/shop.csv", location)){
                         System.out.println("You have successfully check into " + location + " at time " + dtfDate.format(date) + " " + dtfTime.format(time) + ".");
@@ -219,17 +219,17 @@ public class RunFile {
                 System.out.println("|        History        |");
                 System.out.println("=========================");
                 System.out.println("This is the list of locations you visited");
-                System.out.println("----------------------------------------");
-                System.out.format("No\t" + "Date\t" + "Time\t" + "Location\t");
+                System.out.println("-------------------------------------------------");
+                System.out.format("No\t" + "Date            " + "Time           " + "Location");
                 System.out.println("");
-                System.out.println("----------------------------------------");
+                System.out.println("-------------------------------------------------");
                 try {
                     List<String[]> nameData = Functions.openCSVFile("saves/records.csv");
                     int index = 1;
                     for(int i=0; i < nameData.size(); i++) {
                         if (nameData.get(i)[1].equalsIgnoreCase(logInName)) {
                             //Sort date and time display
-                            System.out.println(nameData.get(index)[0] + "\t" + nameData.get(i)[1] + "\t" + nameData.get(i)[2] + "\t" + nameData.get(i)[3]);
+                            System.out.println(nameData.get(index)[0] + "\t" + Functions.getDate(nameData.get(i)[2]) + "\t" + Functions.getTime(nameData.get(i)[2]) + "\t" + nameData.get(i)[3]);
                             index++;
                         } 
         
