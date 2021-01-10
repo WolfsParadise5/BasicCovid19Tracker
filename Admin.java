@@ -12,7 +12,20 @@ import java.util.Vector;
 
 public class Admin extends Person {
     
+    private long time;
+    private String shopName;
+    private int no;
+    private String name;
+
     Admin() {}
+
+    Admin(int no,String name, long time, String shopName) {
+        this.no = no;
+        this.name = name;
+        this.time = time;
+        this.shopName = shopName;
+
+    }
 
     public void ChangeCustomerDetail() {
     
@@ -190,7 +203,7 @@ public class Admin extends Person {
                     for(int k=0; k<custStrArray.length; k++) {
                         
                         if (custStrArray[k].equalsIgnoreCase(peopleInfected.get(i))) {
-                            custCsvBody.get(j)[k+1] = "Close"; 
+                            custCsvBody.get(j)[k+2] = "Close"; 
                         }
                     }
                 }
@@ -246,6 +259,10 @@ public class Admin extends Person {
 
         
 
+    }
+
+    public String toCSVString() {
+        return no + "," + name + "," + time + "," + shopName;
     }
 
 

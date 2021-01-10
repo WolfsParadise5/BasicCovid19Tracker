@@ -8,7 +8,7 @@ public class Customer extends Person {
 	
 	Customer () {}
 	
-	Customer(int no, String phone, String name, String status) {
+	Customer(int no, String name, String phone, String status) {
 		super(name, phone, status);
         this.no = no;
     }

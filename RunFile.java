@@ -8,10 +8,21 @@ public class RunFile {
     
     public static void main(String[] args) {
         
+        if (!Functions.isFileExists("saves/records.csv")) {
+            try {
+            Functions.GenerateShops();
+            Functions.GenerateCustomer();
+            }
+
+            catch (IOException e) {
+                System.out.println("Unable to generate");
+            }
+        }
+        Scanner custObj = new Scanner(System.in);
         //Main Menu
         do{
             
-            Scanner custObj = new Scanner(System.in);
+            
             
             System.out.println("=========================");
             System.out.println("|  Sign in or Register? |");
@@ -66,7 +77,7 @@ public class RunFile {
                     custObj.nextLine();
                     String logInName = custObj.nextLine();
                     
-                    if (logInName != "admin") {   
+                    if (!logInName.equals("admin")) {   
                         try{
                             boolean findName = Functions.isNameExists(logInName);
                             
@@ -117,21 +128,18 @@ public class RunFile {
                 else {
                     System.out.println("Invalid input, please try again");
                 }
-                custObj.close();
 
                 
             }
             
             else if(selection == 3)
             {
-                custObj.close();
                 System.out.println("Thanks for your usage! Please come back again.");
                 break;
             }
     
             else
-            {
-                custObj.close();   
+            {  
                 System.out.println("Invalid input");
             }
         } 
@@ -139,8 +147,9 @@ public class RunFile {
     }
 
     public static void CustomerMenu(String logInName) {
+        Scanner mainObj2 = new Scanner(System.in); 
         do {
-            Scanner mainObj = new Scanner(System.in); 
+            
             
             System.out.println("=========================");
             System.out.println("|       Main Menu       |");
@@ -151,8 +160,7 @@ public class RunFile {
             System.out.println("4. Log Out");
             System.out.print("->");
             
-            int mainSelect = mainObj.nextInt();
-            mainObj.close();
+            int mainSelect = mainObj2.nextInt();
 
             if (mainSelect == 1)
             {
@@ -163,7 +171,7 @@ public class RunFile {
                 try {
                     List<String[]> nameData = Functions.openCSVFile("saves/customer.csv");
                     for(int i=0; i < nameData.size(); i++) {
-                        if (nameData.get(i)[2].equalsIgnoreCase(logInName)) {
+                        if (nameData.get(i)[1].equalsIgnoreCase(logInName)) {
                             System.out.println(nameData.get(i)[3]);
                         } 
         
@@ -186,8 +194,8 @@ public class RunFile {
                 System.out.println("|        Check In       |");
                 System.out.println("=========================");
                 System.out.print("Please enter your location to check in: ");
-                mainObj.nextLine();
-                String location = mainObj.nextLine();
+                mainObj2.nextLine();
+                String location = mainObj2.nextLine();
                 try {
                     
                     //List<String[]> saveRecord = Functions.openCSVFile("save/record.csv");
@@ -216,11 +224,12 @@ public class RunFile {
                 System.out.println("");
                 System.out.println("----------------------------------------");
                 try {
-                    List<String[]> nameData = Functions.openCSVFile("saves/record.csv");
+                    List<String[]> nameData = Functions.openCSVFile("saves/records.csv");
                     int index = 1;
                     for(int i=0; i < nameData.size(); i++) {
-                        if (nameData.get(i)[3].equalsIgnoreCase(logInName)) {
-                            System.out.println(nameData.get(index)[0] + "\t" + nameData.get(i)[1] + "\t" + nameData.get(i)[2] + "\t" + nameData.get(i)[4]);
+                        if (nameData.get(i)[1].equalsIgnoreCase(logInName)) {
+                            //Sort date and time display
+                            System.out.println(nameData.get(index)[0] + "\t" + nameData.get(i)[1] + "\t" + nameData.get(i)[2] + "\t" + nameData.get(i)[3]);
                             index++;
                         } 
         
@@ -260,10 +269,9 @@ public class RunFile {
             System.out.print("->");
 
             int inputData = shopScanner.nextInt();
-            shopScanner.close();
 
             if (inputData == 1) {
-                shop.checkStatus();
+                shop.checkStatus(shopName);
             }
 
             else if (inputData == 2) {
@@ -283,9 +291,8 @@ public class RunFile {
 
     public static void adminMenu()
     {
+        Scanner adminScanner = new Scanner(System.in);
         do{
-            Scanner adminScanner = new Scanner(System.in);
-
             Admin admin = new Admin();
 
             System.out.println("-------------");
@@ -294,11 +301,11 @@ public class RunFile {
             System.out.println("|2. View customer list   |");
             System.out.println("|3. View shop list       |");
             System.out.println("|4. Flag customer        |");
-            System.out.println("|5. Exit                 |");
+            System.out.println("|5. Load 30 customer data|");
+            System.out.println("|6. Exit                 |");
             System.out.println("==========================");
             System.out.print("->");
             int mainSelect = adminScanner.nextInt();
-            adminScanner.close();
 
             if(mainSelect == 1)
                 admin.MasterVisitHistory();
@@ -310,19 +317,19 @@ public class RunFile {
                 admin.DisplayShopDetails();
 
             else if(mainSelect == 4) {
-                Scanner flag = new Scanner(System.in);
 
                 System.out.println(" ");
                 System.out.println("==========================");
                 System.out.print("Pick a customer to flag: ");
-                String flagName = flag.next();
+                String flagName = adminScanner.next();
 
-                admin.changeToCase(flagName);
-                flag.close();  
+                admin.changeToCase(flagName);  
             }
             
-
             else if(mainSelect == 5)
+                try {Functions.LoadPeople();} catch (IOException e) {e.printStackTrace();}
+
+            else if(mainSelect == 6)
             {
                 System.out.println("Logging off. See you again Agent 47.");
                 break;

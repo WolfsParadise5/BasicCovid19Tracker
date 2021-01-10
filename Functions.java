@@ -1,11 +1,15 @@
 import com.opencsv.CSVWriter;
 import com.opencsv.CSVReader;
+
+import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.Arrays;
 //import java.util.Collections;
 import java.util.LinkedList;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
 import java.io.File;
@@ -18,97 +22,103 @@ import java.time.LocalTime;
 
 public class Functions {
     
-    public static void LoadPeople() {
+    public static void GenerateShops() throws IOException {
+        
+        ArrayList<Shop> shops = new ArrayList<>();
+        File file = new File("saves");
+        file.mkdir();
 
-        //Generate the customer CSV
-        try {
+        FileWriter csvFile = new FileWriter("saves/shop.csv");
+        
+        shops.add(new Shop(1,"Walmart","5478588","Richardo","Normal"));
+        shops.add(new Shop(2,"Tesco","3985645","Siti","Normal"));
+        shops.add(new Shop(3,"Subway","9478652","Jonathan","Normal"));
+        shops.add(new Shop(4,"99SpeedMart","7853141","Dio","Normal"));
+
+        for(int i = 0; i < shops.size(); i++) {
+            csvFile.append(shops.get(i).toCSVString() + "\n");
+        }
+        csvFile.flush();
+        csvFile.close();
+    }
+
+    public static void GenerateCustomer() throws IOException {
+        
+        ArrayList<Customer> customer = new ArrayList<>();
+
+        FileWriter csvFile = new FileWriter("saves/customer.csv");
+        
+        customer.add(new Customer(1,"Richardo","121174560","Normal"));
+        customer.add(new Customer(2,"Siti","139856458","Normal"));
+        customer.add(new Customer(3,"Dio","194786523","Normal"));
+        customer.add(new Customer(4,"Giorno","153489898","Normal"));
+
+        for(int i = 0; i < customer.size(); i++) {
+            csvFile.append(customer.get(i).toString() + "\n");
+        }
+        csvFile.flush();
+        csvFile.close();
+    }
+
+
+    
+    public static void LoadPeople() throws IOException {
+
+        ArrayList<Admin> records = new ArrayList<>();
+        int id = 1;
+        if (isFileExists("saves/records.csv")) {
+
+            //Read all the csv data
+            List<String> lines = Files.readAllLines(Paths.get("saves/records.csv"));
+
+            for (int i = 0; i < lines.size(); i++) {
+                String[] items = lines.get(i).split(",");
+                id = Integer.parseInt(items[0]);
+                records.add(new Admin(id, items[1],Integer.parseInt(items[2]),items[3]));
+            }
+        }
+
+        else {
             File file = new File("saves");
             file.mkdir();
-            CSVWriter csvwriteCust = new CSVWriter(new FileWriter("saves/customer.csv"));
-
-            List<String[]> shopCust = new LinkedList<String[]>();
-            shopCust.add(new String[]{"1","121174560","Richardo","Normal"});
-            shopCust.add(new String[]{"2","139856458","Siti","Normal"});
-            shopCust.add(new String[]{"3","194786523","Jonathan","Normal"});
-            shopCust.add(new String[]{"4","178531417","Dio","Normal"});
-            shopCust.add(new String[]{"5","153489898","Giorno","Normal"});
-
-            csvwriteCust.writeAll(shopCust);
-            csvwriteCust.close();
-            System.out.println("shop.csv generated!");
+            
         }
 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        FileWriter csvFile = new FileWriter("saves/records.csv");
         
-        //Generate the shops CSV file
-        try {
-            CSVWriter csvwriteShop = new CSVWriter(new FileWriter("saves/shop.csv"));
-
-            List<String[]> shopRows = new LinkedList<String[]>();
-            shopRows.add(new String[]{"1","Walmart","5478588","Fong","Normal"});
-            shopRows.add(new String[]{"2","7-Eleven","7685900","Naga","Normal"});
-            shopRows.add(new String[]{"3","FamilyMart","8903890","Ali","Normal"});
-            shopRows.add(new String[]{"4","Tesco","4758210","Boy","Normal"});
-            shopRows.add(new String[]{"5","Sunway","35884762","Dutch","Normal"});
-
-            csvwriteShop.writeAll(shopRows);
-            csvwriteShop.close();
-            System.out.println("Print generated!");
-        }
-
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //Generate random visits
-        try {
-            CSVWriter csvWriteCheckin = new CSVWriter(new FileWriter("saves/records.csv")); 
-            List<String[]> checkInRows = new LinkedList<String[]>();
-            String[] names = {"Siti","Ricardo","Jonathan","Dio","Ghorno"};
-            String[] shops = {"Walmart","7-Eleven","FamilyMart","Tesco","Sunway"};
-            long[] times = new long[30];
+        String[] names = {"Siti","Ricardo","Jonathan","Dio","Ghorno"};
+        String[] shops = {"Walmart","7-Eleven","FamilyMart","Tesco","Sunway"};
+        long[] times = new long[30];
             
-            Random generate = new Random();
+        Random generate = new Random();
             
-            //List to iterate to put in CSV
+        //List to iterate to put in CSV
 
-            for (int i=0; i < 30; i++) {
-                long num = 1609764011 - (long)(Math.random()*(86400-(0+1)+(0)));
-                System.out.println(num);
-                times[i] = num;
+        for (int i=0; i < 30; i++) {
+            long num = 1609764011 - (long)(Math.random()*(86400-(0+1)+(0)));
+            System.out.println(num);
+            times[i] = num;
 
-            }
-            Arrays.sort(times);
-            for(int i=0; i < 30; i++) {
-                
-                /*
-                for(int j=0; j < 30; j++) {
-                    if(times[j] <= tempLong)
-                        tempLong = times[j];
-                        tempindex = j; 
-                }
-                
-                */
-                int randomIndex = generate.nextInt(names.length);
-                int randomIndex2 = generate.nextInt(shops.length);
-                String name = names[randomIndex];
-                String shop = shops[randomIndex2];
-
-                checkInRows.add(new String[]{Integer.toString(i),name,Long.toString(times[i]),shop});
-
-            }
-
-            
-            csvWriteCheckin.writeAll(checkInRows);
-            csvWriteCheckin.close();
         }
+        Arrays.sort(times);
         
-        catch (IOException e) {
-                e.printStackTrace();
-            }
+        for(int i=id+1; i < 31+id; i++) {
+            
+            int randomIndex = generate.nextInt(names.length);
+            int randomIndex2 = generate.nextInt(shops.length);
+            String name = names[randomIndex];
+            String shop = shops[randomIndex2];
+            if (id > 1) 
+                records.add(new Admin(i, name, times[i-id-1],shop));
+            else
+                records.add(new Admin(i-1, name, times[i-id-1],shop));
+        }
+
+        for(int i = 0; i < records.size(); i++) {
+            csvFile.append(records.get(i).toCSVString() + "\n");
+        }
+        csvFile.flush();
+        csvFile.close();
 
         System.out.println("Random people ready to go!");
 
@@ -121,7 +131,7 @@ public class Functions {
 
         //Iterate through customer list to find the name
         for (int i= 0; i < customerData.size(); i++) {
-            if(customerData.get(i)[2].equalsIgnoreCase(name)) {
+            if(customerData.get(i)[1].equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -173,5 +183,10 @@ public class Functions {
             variableLength++;
         }
         return returnString;
+    }
+
+    public static boolean isFileExists(String filepath) {
+        File checkFile = new File(filepath);
+        return checkFile.exists();
     }
 }
