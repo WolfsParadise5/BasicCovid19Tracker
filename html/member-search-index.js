@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"<Unnamed>","c":"Person","l":"getName()"},{"p":"<Unnamed>","c":"Person","l":"getPhone()"},{"p":"<Unnamed>","c":"Person","l":"getStatus()"}]
