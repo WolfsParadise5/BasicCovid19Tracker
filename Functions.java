@@ -41,11 +41,11 @@ public class Functions {
 
         FileWriter csvFile = new FileWriter("saves/customer.csv");
         
-        customer.add(new Customer(1,"Michael","121174560","Normal"));
+        customer.add(new Customer(1,"Ricardo","121174560","Normal"));
         customer.add(new Customer(2,"Siti","139856458","Normal"));
         customer.add(new Customer(3,"Dio","194786523","Normal"));
         customer.add(new Customer(4,"Giorno","153489898","Normal"));
-        customer.add(new Customer(5,"Ali","15449898","Normal"));
+        customer.add(new Customer(5,"Jonathan","15449898","Normal"));
 
         for(int i = 0; i < customer.size(); i++) {
             csvFile.append(customer.get(i).toString() + "\n");
@@ -80,7 +80,7 @@ public class Functions {
 
         FileWriter csvFile = new FileWriter("saves/records.csv");
         
-        String[] names = {"Siti","Ricardo","Jonathan","Dio","Ghorno"};
+        String[] names = {"Siti","Ricardo","Jonathan","Dio","Giorno"};
         String[] shops = {"Walmart","99SpeedMart","Tesco","Sunway"};
         long[] times = new long[30];
             
