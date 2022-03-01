@@ -3,4 +3,4 @@ Project made for the subject Object Oriented Programming and Data Structure (OOP
 Following was for an assignment indicating if the person has gotten covid,
 based of given dataset from the provided assignment.
 
-Program can be run by compiling the MainFile.java program. 
+Program can be run by compiling the RunFile.java program. 
